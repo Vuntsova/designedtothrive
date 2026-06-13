@@ -66,7 +66,7 @@
 <form id="chart-form" class="form-card">
   <div class="form-error" id="form-error" role="alert" aria-live="polite"></div>
   <div class="field"><label for="name">First name</label><input type="text" id="name" name="name" autocomplete="given-name" placeholder="Your first name"></div>
-  <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" placeholder="you@email.com" required><span style="display:block;font-size:.78rem;color:var(--ink-soft);margin-top:.35rem">We email your chart and a free starter guide here.</span></div>
+  <div class="field"><label for="email">Email <button type="button" class="email-info" id="email-info-btn" aria-label="How we use your email" aria-expanded="false">i</button></label><input type="email" id="email" name="email" autocomplete="email" placeholder="you@email.com" required><span class="email-tip" id="email-tip" role="status">I'll email your chart plus occasional updates. No spam, unsubscribe anytime.</span></div>
   <div class="field"><label for="date">Birth date</label><input type="date" id="date" name="date" required></div>
   <script>document.getElementById('date').max=new Date().toISOString().split('T')[0];</script>
   <div class="field"><label for="time">Birth time (24h)</label><input type="time" id="time" name="time" required></div>
@@ -78,6 +78,24 @@
   <div class="calc-status" id="calc-status" aria-live="polite"></div>
   <p style="font-size:.78rem;color:var(--ink-soft);margin-top:.8rem">Planetary positions calculated with Swiss Ephemeris, the same astronomical engine used by professional Human Design software.</p>
 </form>
+<style>
+  .email-info{display:inline-flex;align-items:center;justify-content:center;width:1.05rem;height:1.05rem;margin-left:.35rem;padding:0;border:1px solid var(--ink-soft);border-radius:50%;background:transparent;color:var(--ink-soft);font-size:.7rem;font-style:italic;line-height:1;cursor:pointer;vertical-align:middle}
+  .email-info:hover,.email-info:focus{border-color:var(--ink);color:var(--ink);outline:none}
+  .email-tip{display:none;font-size:.78rem;color:var(--ink-soft);margin-top:.35rem}
+  .email-tip.show{display:block}
+  .field:hover .email-tip{display:block}
+</style>
+<script>
+  (function(){
+    var btn=document.getElementById('email-info-btn');
+    var tip=document.getElementById('email-tip');
+    if(!btn||!tip)return;
+    btn.addEventListener('click',function(){
+      var open=tip.classList.toggle('show');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+    });
+  })();
+</script>
 </div></section>
 <footer class="footer">
   <div class="wrap">
