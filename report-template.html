@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- =========================================================
+     DESIGNED TO THRIVE  -  REPORT TEMPLATE
+     Replace every {{PLACEHOLDER}} and the demo copy below it.
+     Switch the report type by changing the class on <body>:
+       class="report mode-reading"   -> client reading / HD deliverable
+       class="report mode-business"  -> business / performance report
+       class="report mode-internal"  -> internal notes / research
+     A full how-to lives at the bottom of this file (HOW TO USE).
+     ========================================================= -->
+<title>{{REPORT TITLE}} - Designed to Thrive</title>
+<meta name="description" content="{{ONE LINE SUMMARY OF THE REPORT}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --warm-white:#FAF6F0;
+  --beige:#EDE4D6;
+  --beige-deep:#E2D5C2;
+  --charcoal:#2C2824;
+  --ink-soft:#5A534A;
+  --gold:#B08D4F;
+  --gold-deep:#94733B;
+  --rule:#D8C9B4;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Inter",system-ui,sans-serif;
+  --doc:820px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--beige);color:var(--charcoal);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--gold-deep);text-decoration:none;border-bottom:1px solid var(--rule)}
+a:hover{color:var(--charcoal)}
+
+/* ---- the page sheet ---- */
+.sheet{max-width:var(--doc);margin:clamp(0px,4vw,3rem) auto;background:var(--warm-white);border:1px solid var(--rule);box-shadow:0 30px 70px -30px rgba(44,40,36,.28)}
+.sheet>*{padding-left:clamp(1.5rem,6vw,4.5rem);padding-right:clamp(1.5rem,6vw,4.5rem)}
+
+/* ---- type ---- */
+h1,h2,h3,h4{font-family:var(--display);font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--charcoal)}
+.eyebrow{font-family:var(--body);font-size:.7rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);display:block}
+em{font-style:italic;color:var(--gold-deep)}
+strong{font-weight:600;color:var(--charcoal)}
+p{margin:0 0 1.1rem}
+.lead{font-size:1.18rem;line-height:1.6;color:var(--ink-soft)}
+
+/* ---- masthead / cover ---- */
+.masthead{padding-top:clamp(2.5rem,6vw,4rem);padding-bottom:clamp(2rem,5vw,3rem);background:var(--charcoal);color:var(--warm-white)}
+.masthead .brand{font-family:var(--display);font-size:1.25rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;display:block}
+.masthead .brand small{display:block;font-family:var(--body);font-size:.5rem;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-top:.35rem}
+.masthead .eyebrow{color:var(--gold);margin:2.4rem 0 1rem}
+.masthead h1{color:#fff;font-size:clamp(2.1rem,5.2vw,3.3rem);font-weight:500;max-width:18ch}
+.masthead h1 em{color:#F0DEBE}
+.masthead .deck{color:rgba(250,246,240,.8);font-size:1.1rem;max-width:46ch;margin-top:1rem}
+
+/* ---- meta strip ---- */
+.meta{display:flex;flex-wrap:wrap;gap:1.6rem 2.8rem;padding-top:1.6rem;padding-bottom:1.6rem;background:var(--beige);border-bottom:1px solid var(--rule)}
+.meta .item{min-width:0}
+.meta dt{font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.3rem}
+.meta dd{font-size:.95rem;color:var(--charcoal);font-weight:500}
+
+/* ---- body sections ---- */
+.body{padding-top:clamp(2.5rem,6vw,3.5rem);padding-bottom:clamp(2.5rem,6vw,4rem)}
+.block{margin-bottom:clamp(2.4rem,5vw,3.4rem)}
+.block:last-child{margin-bottom:0}
+.block>.eyebrow{margin-bottom:.7rem}
+.block h2{font-size:clamp(1.5rem,3.2vw,2rem);margin-bottom:1rem}
+.block h3{font-size:1.2rem;margin:1.8rem 0 .7rem}
+.block ul,.block ol{margin:0 0 1.1rem 1.2rem;color:var(--ink-soft)}
+.block li{margin-bottom:.5rem;padding-left:.3rem}
+.block li::marker{color:var(--gold)}
+
+/* ---- numbered section marker (use only for true sequences) ---- */
+.block.numbered>.eyebrow::before{content:counter(sec,decimal-leading-zero) "  /  ";counter-increment:sec;color:var(--gold)}
+.body{counter-reset:sec}
+
+/* ---- divider ---- */
+.rule{height:1px;background:var(--rule);border:0;margin:clamp(2.4rem,5vw,3.4rem) 0}
+
+/* ---- callout (key takeaway / what to do) ---- */
+.callout{background:var(--beige);border-left:3px solid var(--gold);padding:1.5rem 1.7rem;margin:1.6rem 0}
+.callout .eyebrow{margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout.dark{background:var(--charcoal);border-left-color:var(--gold)}
+.callout.dark p,.callout.dark li{color:rgba(250,246,240,.85)}
+.callout.dark .eyebrow{color:var(--gold)}
+
+/* ---- pull quote ---- */
+.pull{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.4;color:var(--charcoal);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.8rem 0;margin:2rem 0}
+.pull cite{display:block;font-family:var(--body);font-style:normal;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin-top:1rem}
+
+/* ---- data table ---- */
+table{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.95rem}
+caption{text-align:left;font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);padding-bottom:.7rem}
+th,td{text-align:left;padding:.8rem 1rem;border-bottom:1px solid var(--rule)}
+thead th{font-family:var(--body);font-size:.66rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);background:var(--beige)}
+tbody tr:last-child td{border-bottom:1px solid var(--charcoal)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---- two-column facts grid ---- */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:1.5rem 0}
+.facts .fact{background:var(--warm-white);padding:1.3rem 1.4rem}
+.facts .fact .k{font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.4rem}
+.facts .fact .v{font-family:var(--display);font-size:1.6rem;color:var(--charcoal);line-height:1.1}
+.facts .fact .note{font-size:.82rem;color:var(--ink-soft);margin-top:.3rem}
+
+/* ---- sign-off ---- */
+.signoff{border-top:1px solid var(--rule);padding-top:1.8rem;margin-top:clamp(2.4rem,5vw,3.4rem)}
+.signoff .sig{font-family:var(--display);font-style:italic;font-size:1.4rem;color:var(--charcoal)}
+.signoff .role{font-size:.8rem;color:var(--ink-soft);margin-top:.2rem}
+
+/* ---- footer ---- */
+.docfoot{background:var(--charcoal);color:rgba(250,246,240,.7);font-size:.78rem;padding-top:1.8rem;padding-bottom:1.8rem;display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;justify-content:space-between;align-items:center}
+.docfoot .brand{font-family:var(--display);letter-spacing:.05em;text-transform:uppercase;color:#fff;font-size:.9rem}
+
+/* ---- type-mode tweaks ---- */
+.mode-internal .masthead{background:var(--beige-deep);color:var(--charcoal)}
+.mode-internal .masthead .brand,.mode-internal .masthead h1{color:var(--charcoal)}
+.mode-internal .masthead h1 em{color:var(--gold-deep)}
+.mode-internal .masthead .brand small,.mode-internal .masthead .eyebrow{color:var(--gold-deep)}
+.mode-internal .masthead .deck{color:var(--ink-soft)}
+.mode-internal .sheet{box-shadow:none}
+
+/* ---- print ---- */
+@media print{
+  body{background:#fff}
+  .sheet{margin:0;max-width:none;border:0;box-shadow:none}
+  .masthead,.docfoot,.callout.dark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .block{break-inside:avoid}
+  a{border:0}
+}
+
+/* ---- accessibility floor ---- */
+a:focus-visible,th:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+
+<!-- Change mode here: mode-reading | mode-business | mode-internal -->
+<body class="report mode-reading">
+<article class="sheet">
+
+  <!-- ============ MASTHEAD / COVER ============ -->
+  <header class="masthead">
+    <span class="brand">Designed to Thrive<small>Human Design • Motherhood • Reinvention</small></span>
+    <span class="eyebrow">{{REPORT TYPE LABEL e.g. Human Design Reading}}</span>
+    <h1>{{REPORT TITLE with an}} <em>{{emphasis}}</em> {{if you want one}}</h1>
+    <p class="deck">{{One or two sentences that say what this report covers and who it is for.}}</p>
+  </header>
+
+  <!-- ============ META STRIP ============ -->
+  <!-- Drop any items you do not need. Add more the same way. -->
+  <dl class="meta">
+    <div class="item"><dt>Prepared for</dt><dd>{{CLIENT / TEAM NAME}}</dd></div>
+    <div class="item"><dt>Prepared by</dt><dd>Emiliya Vuntsova</dd></div>
+    <div class="item"><dt>Date</dt><dd>{{MONTH DD, YYYY}}</dd></div>
+    <div class="item"><dt>Reference</dt><dd>{{DTT-0000}}</dd></div>
+  </dl>
+
+  <!-- ============ BODY ============ -->
+  <div class="body">
+
+    <!-- SUMMARY / OVERVIEW (every report opens with this) -->
+    <section class="block">
+      <span class="eyebrow">Summary</span>
+      <h2>The short version</h2>
+      <p class="lead">{{The single most important thing the reader should walk away knowing. Two or three sentences. If they read nothing else, this is it.}}</p>
+    </section>
+
+    <!-- KEY TAKEAWAYS callout -->
+    <div class="callout">
+      <span class="eyebrow">Key takeaways</span>
+      <ul style="margin-bottom:0">
+        <li>{{First thing that matters.}}</li>
+        <li>{{Second thing that matters.}}</li>
+        <li>{{Third thing that matters.}}</li>
+      </ul>
+    </div>
+
+    <hr class="rule">
+
+    <!-- A NUMBERED SECTION (use .numbered only when order is real) -->
+    <section class="block numbered">
+      <span class="eyebrow">{{Section name}}</span>
+      <h2>{{Section heading}}</h2>
+      <p>{{Body copy. Keep paragraphs short. Use <strong>bold</strong> for the words that carry weight and <em>italics</em> for nuance.}}</p>
+      <h3>{{A sub-point}}</h3>
+      <p>{{More detail under the sub-point.}}</p>
+    </section>
+
+    <!-- FACTS / NUMBERS grid (great for business + chart basics) -->
+    <section class="block numbered">
+      <span class="eyebrow">At a glance</span>
+      <h2>{{The numbers that matter}}</h2>
+      <div class="facts">
+        <div class="fact"><div class="k">{{Label}}</div><div class="v">{{Value}}</div><div class="note">{{context}}</div></div>
+        <div class="fact"><div class="k">{{Label}}</div><div class="v">{{Value}}</div><div class="note">{{context}}</div></div>
+        <div class="fact"><div class="k">{{Label}}</div><div class="v">{{Value}}</div><div class="note">{{context}}</div></div>
+      </div>
+    </section>
+
+    <!-- DATA TABLE -->
+    <section class="block numbered">
+      <span class="eyebrow">Detail</span>
+      <h2>{{Table heading}}</h2>
+      <table>
+        <caption>{{What this table shows}}</caption>
+        <thead>
+          <tr><th>{{Column}}</th><th>{{Column}}</th><th class="num">{{Number column}}</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>{{Row}}</td><td>{{Value}}</td><td class="num">{{0}}</td></tr>
+          <tr><td>{{Row}}</td><td>{{Value}}</td><td class="num">{{0}}</td></tr>
+          <tr><td>{{Row}}</td><td>{{Value}}</td><td class="num">{{0}}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PULL QUOTE (optional, use once at most) -->
+    <blockquote class="pull">
+      {{A single line worth slowing down for.}}
+      <cite>{{Attribution or source}}</cite>
+    </blockquote>
+
+    <!-- WHAT TO DO NEXT (dark callout for emphasis) -->
+    <div class="callout dark">
+      <span class="eyebrow">What to do next</span>
+      <ol style="margin-bottom:0">
+        <li>{{First concrete action.}}</li>
+        <li>{{Second concrete action.}}</li>
+        <li>{{Third concrete action.}}</li>
+      </ol>
+    </div>
+
+    <!-- SIGN-OFF -->
+    <div class="signoff">
+      <p>{{A closing line in your voice. Warm, direct, no filler.}}</p>
+      <span class="sig">Emiliya</span>
+      <div class="role">Founder, Designed to Thrive</div>
+    </div>
+
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="docfoot">
+    <span class="brand">Designed to Thrive</span>
+    <span>{{REPORT TYPE LABEL}} • {{MONTH YYYY}}</span>
+    <span>Human Design is a tool for self-awareness, not medical, legal, or financial advice.</span>
+  </footer>
+
+</article>
+
+<!-- =========================================================
+     HOW TO USE THIS TEMPLATE  (delete this whole comment block
+     in any finished report)
+
+     1. PICK A MODE
+        On the <body> tag change the second class:
+          mode-reading   - dark cover, warm and personal. Client HD readings.
+          mode-business  - dark cover, same as reading but pair it with the
+                           facts grid + tables, drop the pull quote.
+          mode-internal  - light cover, no shadow, plainer. Notes and research.
+
+     2. FILL IN THE BLANKS
+        Replace every {{ ... }} marker. Search the file for "{{" to find
+        them all. Nothing with double curly braces should survive into a
+        finished report.
+
+     3. KEEP OR CUT BLOCKS
+        Each <section class="block">, the callouts, the table, the facts
+        grid, and the pull quote are independent. Delete any you do not
+        need. Reorder freely. The only block that should always stay is the
+        opening Summary.
+
+     4. NUMBERING
+        Add class "numbered" to a .block to auto-number its eyebrow
+        (01 / , 02 / ...). Only number things that are a real sequence.
+        Remove "numbered" from blocks that are not ordered steps.
+
+     5. TABLES AND NUMBERS
+        Put class="num" on a <th>/<td> to right-align and use tabular
+        figures for clean number columns.
+
+     6. EXPORT TO PDF
+        Print to PDF from the browser. Backgrounds and the dark cover are
+        set to print. Each section avoids breaking across pages.
+
+     7. STYLE RULES (house style)
+        - No em dashes or en dashes. Use a spaced hyphen ( - ), comma, or
+          period instead.
+        - Sentence case for body copy and labels.
+        - Do not invent figures. If a number is unknown, leave the {{ }} in
+          so it is obvious something is missing.
+     ========================================================= -->
+</body>
+</html>
