@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S6BLEGX3Z9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-S6BLEGX3Z9', { 'debug_mode': true });
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6ivjc9ljv");
+</script>
+<title>Human Design Chart - Designed to Thrive</title>
+<meta name="description" content="Get your real Human Design chart. Type, strategy, authority, and profile, calculated from your birth data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.form-error{background:rgba(180,30,30,.08);border:1px solid rgba(180,30,30,.3);color:#9a2222;padding:.9rem 1rem;font-size:.94rem;margin-bottom:1.2rem;display:none}
+.form-error.show{display:block}
+.btn[disabled]{opacity:.6;cursor:wait}
+.calc-status{font-size:.86rem;color:var(--ink-soft);margin-top:.8rem;min-height:1.2em}
+
+/* location autocomplete */
+.loc-wrap{position:relative}
+.loc-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--rule);border-top:none;list-style:none;margin:0;padding:0;max-height:260px;overflow-y:auto;z-index:20;display:none;box-shadow:0 8px 24px -8px rgba(44,40,36,.2)}
+.loc-list.open{display:block}
+.loc-item,.loc-loading,.loc-empty{padding:.75rem 1rem;font-size:.92rem;line-height:1.35;border-bottom:1px solid var(--rule);color:var(--charcoal)}
+.loc-item:last-child,.loc-loading:last-child,.loc-empty:last-child{border-bottom:none}
+.loc-item{cursor:pointer}
+.loc-item:hover,.loc-item.active{background:var(--beige);color:var(--charcoal)}
+.loc-loading,.loc-empty{color:var(--ink-soft);font-style:italic;cursor:default}
+</style>
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<nav class="nav solid">
+  <a href="index.html" class="brand">Designed to Thrive<small>Human Design • Motherhood • Reinvention</small></a>
+  <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="start.html">Start Here</a><a href="types.html">The Types</a><a href="book.html">The Book</a><a href="readings.html">Readings</a><a href="podcast.html">Podcast</a>
+    <div class="nav-drop">
+      <button aria-haspopup="true" aria-expanded="false">More <span class="caret">&#9662;</span></button>
+      <div class="nav-menu"><a href="parenting.html">Parenting</a><a href="business.html">Business</a><a href="blog.html">Blog</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    </div>
+    <a href="chart.html" class="cta">Chart &rarr;</a>
+  </div>
+</nav>
+<header class="page-head"><div class="wrap"><span class="eyebrow">Your Human Design chart</span><h1>Your Human Design <em>chart</em></h1><p>Enter your birth details and get your real type, strategy, authority, and profile, calculated from your exact birth moment.</p></div></header>
+<section class="section"><div class="wrap split">
+<div class="prose" style="max-width:none"><h2 style="margin-top:0">What you'll get</h2>
+<ul><li>Your type and what it means in plain English</li><li>Your strategy and authority, how you are built to decide</li><li>Your profile</li><li>Your defined and open centers</li></ul>
+<p style="margin-top:1rem">Accurate birth time matters. If you are not sure of yours, get as close as you can, you can refine it later.</p>
+<p style="font-size:.88rem;color:var(--ink-soft);margin-top:.6rem">Your birth data is used only to calculate your chart and is not stored.</p>
+</div>
+<form id="chart-form" class="form-card">
+  <div class="form-error" id="form-error" role="alert" aria-live="polite"></div>
+  <div class="field"><label for="name">First name</label><input type="text" id="name" name="name" autocomplete="given-name" placeholder="Your first name"></div>
+  <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" placeholder="you@email.com" required><span style="display:block;font-size:.78rem;color:var(--ink-soft);margin-top:.35rem">We email your chart and a free starter guide here.</span></div>
+  <div class="field"><label for="date">Birth date</label><input type="date" id="date" name="date" required></div>
+  <script>document.getElementById('date').max=new Date().toISOString().split('T')[0];</script>
+  <div class="field"><label for="time">Birth time (24h)</label><input type="time" id="time" name="time" required></div>
+  <div class="field loc-wrap"><label for="location">Birth location</label>
+    <input type="text" id="location" name="location" placeholder="Start typing your birth city..." autocomplete="off" required>
+    <ul id="location-suggestions" class="loc-list" role="listbox"></ul>
+  </div>
+  <button type="submit" class="btn btn-solid" id="submit-btn" style="width:100%">Calculate my chart</button>
+  <div class="calc-status" id="calc-status" aria-live="polite"></div>
+  <p style="font-size:.78rem;color:var(--ink-soft);margin-top:.8rem">Planetary positions calculated with Swiss Ephemeris, the same astronomical engine used by professional Human Design software.</p>
+</form>
+</div></section>
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <a href="index.html" class="brand">Designed to Thrive<small>Human Design • Motherhood • Reinvention</small></a>
+      <p>Practical Human Design for women, mothers, and seekers building a life that fits their actual energy. Founded by Emiliya Vuntsova.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="start.html">Start Here</a>
+      <a href="types.html">The Types</a>
+      <a href="chart.html">Chart</a>
+      <a href="blog.html">Blog</a>
+      <a href="podcast.html">Podcast</a>
+    </div>
+    <div>
+      <h4>Work With Me</h4>
+      <a href="readings.html">Readings</a>
+      <a href="parenting.html">Parenting by Design</a>
+      <a href="business.html">Business by Design</a>
+      <a href="book.html">The Book</a>
+      <a href="shop.html">Shop</a>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <a href="about.html">About Emiliya</a>
+      <a href="contact.html">Contact</a>
+      <a href="chart.html">Get Your Chart</a>
+    </div>
+    <div class="fineprint">
+      <span>&copy; 2026 Designed to Thrive. All rights reserved.</span>
+      <span>Human Design is a tool for self-awareness, not medical, legal, or financial advice.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/chart-client.js"></script>
+</body>
+</html>

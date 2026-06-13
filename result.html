@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S6BLEGX3Z9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-S6BLEGX3Z9', { 'debug_mode': true });
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x6ivjc9ljv");
+</script>
+<title>Your Human Design Result - Designed to Thrive</title>
+<meta name="description" content="Your Human Design chart result and the next step for your type.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.result-loading{padding:4rem 1.5rem;text-align:center;color:var(--ink-soft)}
+.result-missing{padding:4rem 1.5rem;text-align:center;max-width:520px;margin:0 auto}
+.result-missing h2{font-size:1.6rem;margin:1rem 0 .8rem}
+.center-pill{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .8rem;border:1px solid var(--rule);background:var(--warm-white);color:var(--charcoal);margin:.2rem .3rem .2rem 0}
+.center-pill.defined{background:var(--charcoal);color:var(--warm-white);border-color:var(--charcoal)}
+.center-pill.open{background:transparent;color:var(--ink-soft)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem;margin:2rem 0}
+@media(max-width:620px){.stat-grid{grid-template-columns:1fr}}
+.stat{border:1px solid var(--rule);padding:1.4rem 1.2rem;background:var(--warm-white)}
+.stat .label{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.4rem}
+.stat .value{font-family:var(--display);font-size:1.6rem;line-height:1.1;color:var(--charcoal)}
+.stat .note{font-size:.88rem;color:var(--ink-soft);margin-top:.4rem}
+.type-hero h1 em{font-style:italic;color:var(--gold-deep)}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.4rem}
+@media(max-width:520px){.themes{grid-template-columns:1fr}}
+.theme-card{padding:1rem 1.2rem;border:1px solid var(--rule);background:var(--beige)}
+.theme-card .k{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.3rem}
+.theme-card .v{font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--charcoal)}
+.birth-meta{font-size:.86rem;color:var(--ink-soft);margin-top:1.2rem}
+.next-step{background:var(--charcoal);color:var(--warm-white)}
+.next-step .eyebrow{color:var(--gold)}
+.next-step h2{color:#fff;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:1rem 0}
+.next-step h2 em{color:#F0DEBE;font-style:italic}
+.next-step p{color:rgba(250,246,240,.85);max-width:42rem;margin:0 auto 1.4rem}
+.next-step .btn-solid{background:#fff;color:var(--charcoal);border-color:#fff}
+.next-step .btn-solid:hover{background:var(--gold);border-color:var(--gold);color:var(--charcoal)}
+.next-step .btn-ghost{color:#fff;border-color:rgba(255,255,255,.6)}
+.next-step .btn-ghost:hover{background:#fff;color:var(--charcoal)}
+.offer-cta{margin:2.6rem 0 0;background:var(--charcoal);color:var(--warm-white);padding:clamp(1.8rem,4vw,2.6rem);border:2px solid var(--gold);position:relative}
+.offer-cta .flag{position:absolute;top:-13px;left:clamp(1.8rem,4vw,2.6rem);background:var(--gold);color:var(--charcoal);font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:.3rem .8rem}
+.offer-cta h3{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin:.4rem 0 .8rem;line-height:1.15}
+.offer-cta h3 em{color:#F0DEBE;font-style:italic}
+.offer-cta p{color:rgba(250,246,240,.85);max-width:46rem;margin:0 0 1rem}
+.offer-cta .price-row{display:flex;align-items:baseline;gap:.7rem;margin:1.2rem 0 1.4rem;flex-wrap:wrap}
+.offer-cta .price{font-family:var(--display);font-size:2rem;color:#fff}
+.offer-cta .price-note{font-size:.84rem;color:rgba(250,246,240,.6)}
+.offer-cta .cta-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.offer-cta .btn-solid{background:var(--gold);color:var(--charcoal);border-color:var(--gold);font-size:1rem}
+.offer-cta .btn-solid:hover{background:#fff;border-color:#fff}
+.offer-cta .btn-ghost{color:#fff;border-color:rgba(255,255,255,.5)}
+.offer-cta .btn-ghost:hover{background:#fff;color:var(--charcoal)}
+</style>
+</head>
+<body>
+<nav class="nav solid">
+  <a href="index.html" class="brand">Designed to Thrive<small>Human Design • Motherhood • Reinvention</small></a>
+  <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="start.html">Start Here</a><a href="types.html">The Types</a><a href="book.html">The Book</a><a href="readings.html">Readings</a><a href="podcast.html">Podcast</a>
+    <div class="nav-drop">
+      <button aria-haspopup="true" aria-expanded="false">More <span class="caret">&#9662;</span></button>
+      <div class="nav-menu"><a href="parenting.html">Parenting</a><a href="business.html">Business</a><a href="blog.html">Blog</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    </div>
+    <a href="chart.html" class="cta">Chart &rarr;</a>
+  </div>
+</nav>
+
+<div id="result-root">
+  <div class="result-loading">Loading your chart...</div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <a href="index.html" class="brand">Designed to Thrive<small>Human Design • Motherhood • Reinvention</small></a>
+      <p>Practical Human Design for women, mothers, and seekers building a life that fits their actual energy. Founded by Emiliya Vuntsova.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="start.html">Start Here</a>
+      <a href="types.html">The Types</a>
+      <a href="chart.html">Chart</a>
+      <a href="blog.html">Blog</a>
+      <a href="podcast.html">Podcast</a>
+    </div>
+    <div>
+      <h4>Work With Me</h4>
+      <a href="readings.html">Readings</a>
+      <a href="parenting.html">Parenting by Design</a>
+      <a href="business.html">Business by Design</a>
+      <a href="book.html">The Book</a>
+      <a href="shop.html">Shop</a>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <a href="about.html">About Emiliya</a>
+      <a href="contact.html">Contact</a>
+      <a href="chart.html">Get Your Chart</a>
+    </div>
+    <div class="fineprint">
+      <span>&copy; 2026 Designed to Thrive. All rights reserved.</span>
+      <span>Human Design is a tool for self-awareness, not medical, legal, or financial advice.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/result-render.js"></script>
+</body>
+</html>
