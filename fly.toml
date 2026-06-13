@@ -1,0 +1,23 @@
+# Fly.io configuration for the Designed to Thrive HD chart API.
+# Free-tier eligible: shared-cpu-1x, 256MB, auto-stop when idle.
+# After running `fly launch`, this file will be merged - app name will update.
+
+app = "designedtothrive-chart"
+primary_region = "iad"  # US East. Change to closer region if most users are elsewhere.
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"     # Still stop extra machines under low load.
+  auto_start_machines = true
+  min_machines_running = 1        # Keep one warm so the form never hits a dead/cold API.
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[env]
+  PORT = "8080"
