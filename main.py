@@ -1,5 +1,5 @@
 """
-Designed to Thrive - Human Design chart API.
+The Design Reader - Human Design chart API.
 
 POST /chart with birth data, returns full HD chart (type/strategy/authority/profile
 + defined centers, channels, gates, and personality/design planetary positions).
@@ -12,25 +12,25 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 import os
 
+import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 
 from chart import calculate_chart
 
 app = FastAPI(
-    title="Designed to Thrive - HD Chart API",
+    title="The Design Reader - HD Chart API",
     description="Human Design chart calculator. Self-hosted Swiss Ephemeris.",
     version="1.0.0",
 )
 
 # CORS: production domain + any local dev port. Production allowlist is exact.
 ALLOWED_ORIGINS = [
-       "https://thedesignreader.com",
-       "https://www.thedesignreader.com",
-   ]
+    "https://thedesignreader.com",
+    "https://www.thedesignreader.com",
+]
 # Also honor any extra origin from env (useful for Netlify preview deploys).
 extra = os.environ.get("EXTRA_ORIGIN")
 if extra:
@@ -46,8 +46,42 @@ app.add_middleware(
 )
 
 # Reusable services (initialized once).
-GEOCODER = Nominatim(user_agent="designedtothrive-hd-chart/1.0")
 TZF = TimezoneFinder()
+
+# LocationIQ geocoding. Key comes from the LOCATIONIQ_KEY env var (set on Render).
+LOCATIONIQ_KEY = os.environ.get("LOCATIONIQ_KEY", "")
+LOCATIONIQ_URL = "https://us1.locationiq.com/v1/search"
+
+
+def locationiq_search(query: str, limit: int = 1):
+    """Call LocationIQ forward geocoding. Returns a list of result dicts
+    (LocationIQ uses the same shape as Nominatim: lat, lon, class, type, address).
+    Raises RuntimeError on a transport/HTTP error so callers can map it to a 503."""
+    if not LOCATIONIQ_KEY:
+        raise RuntimeError("Geocoder is not configured.")
+    params = {
+        "key": LOCATIONIQ_KEY,
+        "q": query,
+        "format": "json",
+        "addressdetails": 1,
+        "limit": limit,
+        "accept-language": "en",
+        "normalizecity": 1,
+    }
+    try:
+        resp = requests.get(LOCATIONIQ_URL, params=params, timeout=8)
+    except requests.RequestException as e:
+        raise RuntimeError(str(e))
+    # LocationIQ returns 404 with a JSON body when nothing matches - treat as no results.
+    if resp.status_code == 404:
+        return []
+    if resp.status_code != 200:
+        raise RuntimeError(f"HTTP {resp.status_code}")
+    try:
+        data = resp.json()
+    except ValueError:
+        return []
+    return data if isinstance(data, list) else []
 
 
 class ChartRequest(BaseModel):
@@ -87,21 +121,23 @@ def resolve_birth_moment(date_str: str, time_str: str, location: str):
     except ValueError:
         raise HTTPException(status_code=400, detail="Bad date or time format.")
 
-    # Geocode location -> lat/lng. addressdetails so we can validate the result.
+    # Geocode location -> lat/lng via LocationIQ.
     try:
-        geo = GEOCODER.geocode(location, timeout=8, addressdetails=True, language="en")
-    except Exception as e:
+        results = locationiq_search(location, limit=1)
+    except RuntimeError as e:
         raise HTTPException(status_code=503, detail=f"Geocoder error: {e}")
-    if not geo:
+    if not results:
         raise HTTPException(
             status_code=400,
             detail=f"Could not find location '{location}'. Try 'City, Country'.",
         )
+    geo = results[0]
+    geo_lat = float(geo["lat"])
+    geo_lng = float(geo["lon"])
 
     # Reject buildings, streets, neighbourhoods, and random POIs - we want a real
     # city-level place so we can be confident about the timezone.
-    raw = getattr(geo, "raw", {}) or {}
-    pair = (raw.get("class", ""), raw.get("type", ""))
+    pair = (geo.get("class", ""), geo.get("type", ""))
     if pair not in ALLOWED_PLACE_PAIRS:
         raise HTTPException(
             status_code=400,
@@ -112,7 +148,7 @@ def resolve_birth_moment(date_str: str, time_str: str, location: str):
         )
 
     # Timezone from coordinates (historical-DST-aware via zoneinfo).
-    tz_name = TZF.timezone_at(lat=geo.latitude, lng=geo.longitude)
+    tz_name = TZF.timezone_at(lat=geo_lat, lng=geo_lng)
     if not tz_name:
         raise HTTPException(
             status_code=400,
@@ -135,9 +171,9 @@ def resolve_birth_moment(date_str: str, time_str: str, location: str):
         "utc_offset": utc_offset_hours,
         "geo": {
             "input": location,
-            "resolved_name": geo.address,
-            "lat": geo.latitude,
-            "lng": geo.longitude,
+            "resolved_name": geo.get("display_name", ""),
+            "lat": geo_lat,
+            "lng": geo_lng,
             "timezone": tz_name,
             "utc_offset_hours": utc_offset_hours,
         },
@@ -163,15 +199,8 @@ def geocode(q: str = ""):
         return {"results": []}
 
     try:
-        candidates = GEOCODER.geocode(
-            q,
-            exactly_one=False,
-            limit=8,
-            addressdetails=True,
-            language="en",
-            timeout=5,
-        )
-    except Exception:
+        candidates = locationiq_search(q, limit=8)
+    except RuntimeError:
         return {"results": []}
 
     if not candidates:
@@ -179,13 +208,12 @@ def geocode(q: str = ""):
 
     out = []
     for r in candidates:
-        raw = getattr(r, "raw", {}) or {}
-        pair = (raw.get("class", ""), raw.get("type", ""))
+        pair = (r.get("class", ""), r.get("type", ""))
         if pair not in ALLOWED_PLACE_PAIRS:
             continue
         # Build a clean "City, Region, Country" label from address parts instead
-        # of Nominatim's full raw address (which includes county, postcode, etc.).
-        addr = raw.get("address", {}) or {}
+        # of the full raw address (which includes county, postcode, etc.).
+        addr = r.get("address", {}) or {}
         city = (addr.get("city") or addr.get("town") or addr.get("village")
                 or addr.get("municipality") or addr.get("hamlet")
                 or addr.get("county") or "")
@@ -194,9 +222,9 @@ def geocode(q: str = ""):
         parts = [p for p in (city, region, country) if p]
         clean = ", ".join(dict.fromkeys(parts))  # join, drop duplicates, keep order
         out.append({
-            "display_name": clean or r.address,
-            "lat": r.latitude,
-            "lng": r.longitude,
+            "display_name": clean or r.get("display_name", ""),
+            "lat": float(r["lat"]),
+            "lng": float(r["lon"]),
         })
         if len(out) >= 5:
             break
