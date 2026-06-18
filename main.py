@@ -28,9 +28,9 @@ app = FastAPI(
 
 # CORS: production domain + any local dev port. Production allowlist is exact.
 ALLOWED_ORIGINS = [
-    "https://designedtothrive.us",
-    "https://www.designedtothrive.us",
-]
+       "https://thedesignreader.com",
+       "https://www.thedesignreader.com",
+   ]
 # Also honor any extra origin from env (useful for Netlify preview deploys).
 extra = os.environ.get("EXTRA_ORIGIN")
 if extra:
